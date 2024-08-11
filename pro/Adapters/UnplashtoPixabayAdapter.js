@@ -1,3 +1,0 @@
-class UnplashtoPixabayAdapter extends PixabayPhotos{
-
-}

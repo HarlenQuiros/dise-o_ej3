@@ -1,9 +1,7 @@
-class Algorythm{
-    constructor(photos){
-        this.photos = photos;
-    }
+// <<Interfaz>>
+export class Algorythm{
 
-    getSortedPhotos(){
+    getSortedPhotos(photos){
         throw new Error("Hasn't been implemented");
     }
 

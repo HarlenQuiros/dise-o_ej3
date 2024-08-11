@@ -1,21 +1,24 @@
+import { Adapter } from "./Adapter";
+import { PixabayPhotos } from "./Apis/PixbayPhotos";
+import { UnplashPhotos } from "./Apis/UnplashPhotos";
 
-
-class BromeliaPictInventory extends Algorythm{
-    constructor(pixabayApiKey, unsplashAccessKey) {
-        this.pixabayApiKey = pixabayApiKey;
-        this.unsplashAccessKey = unsplashAccessKey;
+class BromeliaPictInventory {
+    constructor(algorythm) {
+        this.algorythm = algorythm;
+        this.unplash = new UnplashPhotos(UNPLASHKEY)
+        this.pixabay = new PixabayPhotos(PIXABAYKEY)
     }    
 
-    rankPhotosResult(unplashPhotosList, pixBayPhotosList, algorythm){
-        // Se utilizan nombres de ordenamiento de listas para ejemplificar
-        algorythmsAvailable = {"Gnome" : new Gnomesort(unplashPhotosList + pixBayPhotosList),
-                               "Quick" : new Quicksort(unplashPhotosList + pixBayPhotosList),
-                               "Bucket" : new Bucketsort(unplashPhotosList + pixBayPhotosList)
-        }
-        this.algorythm = algorythmsAvailable[algorythm];
-        const sortedPhotos = this.algorythm.getSortedPhotos()
-        return sortedPhotos.slice(0,10)
+    rankPhotosResult(unplashPhotosList, pixBayPhotosList){
+        const adapter = new Adapter()
+        const sameFormatPhotos = adapter.adapt(unplashPhotosList, pixBayPhotosList)
+        const sortedPhotos = this.algorythm.getSortedPhotos(sameFormatPhotos)
+        return sortedPhotos
     }
 
+    // Ahora se podra cambiar el algoritmo de optencion de imagenes en cualquier momento
+    setAlgorythm(algorythm){
+        this.algorythm = algorythm
+    }
 }
 
